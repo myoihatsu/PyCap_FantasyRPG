@@ -12,12 +12,12 @@ class Character:
 class Grunt(Character):
     def __init__(self, name, health, mana, action_speed,strength):
         super().__init__(name, health, mana, action_speed)
-        
+
         self.__strength = strength
 
     #* added simple get_damage
     def get_damage(self):
-        return self.__strength
+        return self.__strength + 2 * self._health
     
 
 class Wizard(Character):
@@ -31,4 +31,15 @@ class Wizard(Character):
 
     #* int + mp damage
     def get_damage(self):
-        return self.__intelligence + 0.2 * self._mana
+        return self.__intelligence + 2 * self._mana
+    
+
+class Ranger(Character):
+    def __init__(self, name, health, mana, action_speed, finesse):
+        super().__init__(name, health, mana, action_speed)
+
+        #* decided finesse sounds nicer instead of dexterity
+        self.__finesse = finesse
+    
+    def get_damage(self):
+        return self.__finesse + 2 * self._action_speed
