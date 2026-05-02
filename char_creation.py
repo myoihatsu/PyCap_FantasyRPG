@@ -30,4 +30,4 @@ def char_creation(selection):
             print(new_char._name)
 
 
-
+choose_class()

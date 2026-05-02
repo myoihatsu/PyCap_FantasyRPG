@@ -1,3 +1,4 @@
+import os
 import json
 
 #* select option function, take int, check if within range, return int
@@ -35,9 +36,20 @@ def save_character(name,character_data):
         print(f"Unexpected Error: {e}")
 
 
+#* delete using os
+def delete_character(file_path):
+    file_path = file_path
+    
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        print("Character json deleted successfully")
+    else:
+        print("Err: File doesn't exist.")
+
 Sauron = {
     "name":"Sauron",
     "HP" : 50
 }
 
 save_character("Sauron",Sauron)
+delete_character("./characters/char_Sauron.json")
