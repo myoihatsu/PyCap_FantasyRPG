@@ -38,7 +38,6 @@ def save_character(name,character_data):
 
 #* delete using os
 def delete_character(file_path):
-    file_path = file_path
     
     if os.path.exists(file_path):
         os.remove(file_path)
