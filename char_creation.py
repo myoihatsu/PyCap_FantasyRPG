@@ -1,4 +1,5 @@
 from job_class import *
+from helper_functions import *
 
 #*Display options, call select option and char_creation
 def choose_class():
@@ -29,23 +30,4 @@ def char_creation(selection):
             print(new_char._name)
 
 
-#*Move to helper functions later
 
-def select_option(option_range):
-    option_range = option_range + 1
-
-    while True:    
-        selection = input("Select option: ")
-        
-        try:
-            selection = int(selection)
-        except ValueError:
-            print("Err: Insert numerical value only")
-            continue
-
-        if selection not in range(1,option_range):
-            print("Err: Out of range.")
-        else:
-            return selection
-
-choose_class()

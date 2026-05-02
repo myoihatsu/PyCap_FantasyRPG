@@ -11,7 +11,7 @@ def first_move(char_one,char_two):
 
 def battle(char_one,char_two):
 
-    #! I explicitly nerfed char one damage as char one would be king
+    #! I explicitly nerfed char one damage as char one would be king(Grunt)
     #! currently Grunt Class damage too op
     c1_dmg = (char_one.get_damage()) * 0.2
     c2_dmg = (char_two.get_damage()) * 0.45
