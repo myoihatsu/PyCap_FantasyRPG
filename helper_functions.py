@@ -37,13 +37,30 @@ def save_character(name,character_data):
 
 
 #* delete using os
-def delete_character(file_path):
+def delete_character():
+    available_files = []
+    count = 0
+    for file_dir in os.listdir("./characters"):
+        available_files.append("./characters/" + file_dir)
+        count += 1
+        print(f"{count}.{file_dir[5:-5:]}")
     
-    if os.path.exists(file_path):
-        os.remove(file_path)
-        print("Character json deleted successfully")
-    else:
-        print("Err: File doesn't exist.")
+    print("Choose character to delete, insert number only:")
+    to_delete = select_option(count)-1
+    while True:
+        confirmation = user_input.get_text("Are you sure? Y or N: ")
+        if confirmation.lower() == "y":        
+            if os.path.exists(available_files[to_delete]):
+                os.remove(available_files[to_delete])
+                print("Character json deleted successfully")
+                break
+            else:
+                print("Err: File doesn't exist.")
+        elif confirmation.lower() == "n":
+            break
+        else:
+            print("err: Insert Y / y for Yes or N / n for No")
+            continue
 
 
 #* functions to get input

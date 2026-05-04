@@ -25,7 +25,7 @@ def display_menu():
         case 3:
             choose_class()
         case 4:
-            ...
+            delete_character()
         case 5:
             ...
         case 6:
