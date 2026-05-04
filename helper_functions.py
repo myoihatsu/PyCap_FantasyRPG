@@ -61,12 +61,11 @@ class user_input:
     def get_num(context):
         while True:
             num = input(context)
-            if not num.isnumeric() or int(num) <= 0:
-                print("Err: Number must be a whole number and cannot be left empty")
-            else:
+            try:
                 num = int(num)
+                if num <= 0:
+                    print("Err: Value must be positive")
+                    continue
                 return num
-            
-
-test1= user_input.get_text("Bro insert text: ")
-test2= user_input.get_num("insert num bro: ")
+            except ValueError:
+                print("Err: Must contain numbers only")
