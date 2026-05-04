@@ -45,10 +45,28 @@ def delete_character(file_path):
     else:
         print("Err: File doesn't exist.")
 
-Sauron = {
-    "name":"Sauron",
-    "HP" : 50
-}
 
-save_character("Sauron",Sauron)
-delete_character("./characters/char_Sauron.json")
+#* functions to get input
+class user_input:
+    @staticmethod
+    def get_text(context):
+        while True:
+            txt = input(context)
+            if not txt:
+                print("Err: Cannot be empty")
+            else:
+                return txt
+    
+    @staticmethod
+    def get_num(context):
+        while True:
+            num = input(context)
+            if not num.isnumeric() or int(num) <= 0:
+                print("Err: Number must be a whole number and cannot be left empty")
+            else:
+                num = int(num)
+                return num
+            
+
+test1= user_input.get_text("Bro insert text: ")
+test2= user_input.get_num("insert num bro: ")
