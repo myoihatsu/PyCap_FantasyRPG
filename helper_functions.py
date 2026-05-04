@@ -36,17 +36,22 @@ def save_character(name,character_data):
         print(f"Unexpected Error: {e}")
 
 
-#* delete using os
-def delete_character():
+#* Is it okay to print and return in one function in working environment? idk
+def display_existing_char():
     available_files = []
     count = 0
     for file_dir in os.listdir("./characters"):
         available_files.append("./characters/" + file_dir)
         count += 1
         print(f"{count}.{file_dir[5:-5:]}")
-    
+    return available_files
+
+
+#* delete using os
+def delete_character():
+    available_files = display_existing_char()
     print("Choose character to delete, insert number only:")
-    to_delete = select_option(count)-1
+    to_delete = select_option(len(available_files))-1
     while True:
         confirmation = user_input.get_text("Are you sure? Y or N: ")
         if confirmation.lower() == "y":        
@@ -124,5 +129,95 @@ def display_character():
             primary_stat = "finesse"
         
         print("==========================================")
-        print(f"name: {character_data["name"]}\nclass: {character_data["job_class"]}\nhealth: {character_data["health"]}\nmana: {character_data["mana"]}\naction speed: {character_data["action_speed"]}\nstrength: {primary_stat}")
+        print(f"name: {character_data["name"]}\nclass: {character_data["job_class"]}\nhealth: {character_data["health"]}\nmana: {character_data["mana"]}\naction speed: {character_data["action_speed"]}\n{primary_stat}: {character_data[primary_stat]}")
         print("==========================================")
+
+
+def edit_character():
+    available_files = display_existing_char()
+    print("Select which character to edit:")
+    selection = select_option(len(available_files))
+    character_data = load_json(available_files[selection-1])
+    
+
+    #! lots of copy pasting from existing code, watchout for errors
+    if "strength" in character_data:
+        primary_stat = "strength"
+    if "intelligence" in character_data:
+        primary_stat = "intelligence"
+    if "finesse" in character_data:
+        primary_stat = "finesse"
+
+    print("== Edit Operation ========================")
+    print(f"\nYou have chosen {character_data["name"]}\nclass: {character_data["job_class"]}")
+    print("==========================================")
+    print(f"Can be edited: \n1.health: {character_data["health"]}\n2.mana: {character_data["mana"]}\n3.action speed: {character_data["action_speed"]}\n4.{primary_stat}: {character_data[primary_stat]}")
+    print("==========================================")
+
+    print("Which of these values you wish to edit: ")
+    e_selection = select_option(4)
+
+    match e_selection:
+        case 1:
+            before = character_data["health"]
+            new = user_input.get_num("Insert new health amount: ")
+            if before == new:
+                return
+            character_data["health"] = new
+            try:
+                with open(available_files[selection-1],'w') as temp:
+                    json.dump(character_data,temp,indent=4) 
+            except OSError as e:
+                print(f"File Error: Could not write to disk. {e}")
+            except TypeError as e:
+                print(f"Data Error: Dictionary contains items that can't be JSON. {e}")
+            except Exception as e:
+                print(f"Unexpected Error: {e}")
+
+        #! will refactor later, very lazy atm and sleepy af
+        case 2:
+            before = character_data["mana"]
+            new = user_input.get_num("Insert new mana amount: ")
+            if before == new:
+                return
+            character_data["mana"] = new
+            try:
+                with open(available_files[selection-1],'w') as temp:
+                    json.dump(character_data,temp,indent=4) 
+            except OSError as e:
+                print(f"File Error: Could not write to disk. {e}")
+            except TypeError as e:
+                print(f"Data Error: Dictionary contains items that can't be JSON. {e}")
+            except Exception as e:
+                print(f"Unexpected Error: {e}")
+        case 3:
+            before = character_data["action_speed"]
+            new = user_input.get_num("Insert new action speed amount: ")
+            if before == new:
+                return
+            character_data["action_speed"] = new
+            try:
+                with open(available_files[selection-1],'w') as temp:
+                    json.dump(character_data,temp,indent=4) 
+            except OSError as e:
+                print(f"File Error: Could not write to disk. {e}")
+            except TypeError as e:
+                print(f"Data Error: Dictionary contains items that can't be JSON. {e}")
+            except Exception as e:
+                print(f"Unexpected Error: {e}")
+        case 4:
+            before = character_data[primary_stat]
+            new = user_input.get_num(f"Insert new {primary_stat} amount: ")
+            if before == new:
+                return
+            character_data[primary_stat] = new
+            try:
+                with open(available_files[selection-1],'w') as temp:
+                    json.dump(character_data,temp,indent=4) 
+            except OSError as e:
+                print(f"File Error: Could not write to disk. {e}")
+            except TypeError as e:
+                print(f"Data Error: Dictionary contains items that can't be JSON. {e}")
+            except Exception as e:
+                print(f"Unexpected Error: {e}")
+

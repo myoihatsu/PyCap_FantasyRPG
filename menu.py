@@ -27,6 +27,6 @@ def display_menu():
         case 4:
             delete_character()
         case 5:
-            ...
+            edit_character()
         case 6:
             sys.exit()
