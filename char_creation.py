@@ -36,4 +36,7 @@ def char_creation(selection):
             new_char = Ranger(*get_commons(stat)).to_dict()
             save_character(new_char["name"],new_char)
 
-choose_class()
+# choose_class()
+gimlee = display_character("./characters/char_Gimlee.json")
+
+print(gimlee)

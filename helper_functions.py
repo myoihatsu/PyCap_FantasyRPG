@@ -80,3 +80,15 @@ def get_commons(unique_stat):
     action_speed = user_input.get_num("Insert character's action_speed: ")
 
     return name,health,mana,action_speed,unique_stat
+
+
+def display_character(file):
+    try:
+        with open(file,'r') as f:
+            character_data = json.load(f)
+        return character_data
+    except FileNotFoundError:
+        print("Error: The file 'data.json' was not found.")
+    except json.JSONDecodeError:
+        print("Error: Failed to decode JSON from the file (invalid JSON format).")
+    
