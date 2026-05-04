@@ -25,7 +25,7 @@ def save_character(name,character_data):
     new_file = "./characters/" + "char_" + name +".json"
     try:
         with open(new_file,'w') as temp:
-            json.dump(character_data,temp,indent=4)
+            json.dump(character_data.__dict__,temp,indent=4)
 
     #* I copy from online for exception. 
     except OSError as e:
@@ -69,3 +69,14 @@ class user_input:
                 return num
             except ValueError:
                 print("Err: Must contain numbers only")
+
+#* functions to get common values of a character-based object for initialization
+#* primary stats (STR,INT,FIN aka unique_stat) are passed using diff_stat
+#* why? just for testing if it works that's all, but I'm keeping this
+def get_commons(unique_stat):
+    name = user_input.get_text("Insert Character Name: ")
+    health = user_input.get_num("Insert character's initial health: ")
+    mana = user_input.get_num("Insert character's initial mana: ")
+    action_speed = user_input.get_num("Insert character's action_speed: ")
+
+    return name,health,mana,action_speed,unique_stat
