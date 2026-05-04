@@ -1,1 +1,5 @@
-print("Start the project man")
+from menu import display_menu
+
+while True:
+    display_menu()
+    

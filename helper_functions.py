@@ -106,6 +106,6 @@ def display_character():
         if "finesse" in character_data:
             primary_stat = "finesse"
         
-        print("==============================")
+        print("==========================================")
         print(f"name: {character_data["name"]}\nclass: {character_data["job_class"]}\nhealth: {character_data["health"]}\nmana: {character_data["mana"]}\naction speed: {character_data["action_speed"]}\nstrength: {primary_stat}")
-        print("==============================")
+        print("==========================================")

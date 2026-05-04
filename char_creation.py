@@ -35,6 +35,3 @@ def char_creation(selection):
             stat = user_input.get_num("Insert character's FIN: ")
             new_char = Ranger(*get_commons(stat)).to_dict()
             save_character(new_char["name"],new_char)
-
-# choose_class()
-display_character()
