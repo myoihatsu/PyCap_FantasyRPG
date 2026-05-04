@@ -25,7 +25,7 @@ def save_character(name,character_data):
     new_file = "./characters/" + "char_" + name +".json"
     try:
         with open(new_file,'w') as temp:
-            json.dump(character_data.__dict__,temp,indent=4)
+            json.dump(character_data,temp,indent=4)
 
     #* I copy from online for exception. 
     except OSError as e:

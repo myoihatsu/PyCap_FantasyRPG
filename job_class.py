@@ -5,10 +5,16 @@ class Character:
         self._mana = mana
         self._action_speed = action_speed
 
+    def __str__(self):
+        pass
+
     def get_damage(self):
-        return 1 
+        pass
 
+    def to_dict(self):
+        pass
 
+    
 class Grunt(Character):
     def __init__(self, name, health, mana, action_speed,strength):
         super().__init__(name, health, mana, action_speed)
@@ -19,6 +25,17 @@ class Grunt(Character):
     def get_damage(self):
         return self.__strength + 2 * self._health
     
+    #* convert to dict to be saved in json
+    def to_dict(self):
+        return {
+            "name" : self._name,
+            "job_class" : "Grunt",
+            "health" : self._health,
+            "mana" : self._mana,
+            "action_speed" : self._action_speed,
+            "strength" : self.__strength
+        }
+
 
 class Wizard(Character):
     def __init__(self, name, health, mana, action_speed,intelligence):
@@ -33,6 +50,16 @@ class Wizard(Character):
     def get_damage(self):
         return self.__intelligence + 2 * self._mana
     
+    def to_dict(self):
+        return {
+            "name" : self._name,
+            "job_class" : "Wizard",
+            "health" : self._health,
+            "mana" : self._mana,
+            "action_speed" : self._action_speed,
+            "intelligence" : self.__intelligence
+        }
+
 
 class Ranger(Character):
     def __init__(self, name, health, mana, action_speed, finesse):
@@ -43,3 +70,13 @@ class Ranger(Character):
     
     def get_damage(self):
         return self.__finesse + 2 * self._action_speed
+    
+    def to_dict(self):
+        return {
+            "name" : self._name,
+            "job_class" : "Ranger",
+            "health" : self._health,
+            "mana" : self._mana,
+            "action_speed" : self._action_speed,
+            "finesse" : self.__finesse
+        }
