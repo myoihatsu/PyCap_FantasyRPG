@@ -37,6 +37,4 @@ def char_creation(selection):
             save_character(new_char["name"],new_char)
 
 # choose_class()
-gimlee = display_character("./characters/char_Gimlee.json")
-
-print(gimlee)
+display_character()

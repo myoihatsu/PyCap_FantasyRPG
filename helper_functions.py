@@ -82,13 +82,30 @@ def get_commons(unique_stat):
     return name,health,mana,action_speed,unique_stat
 
 
-def display_character(file):
+#* Load file
+def load_json(dir):
     try:
-        with open(file,'r') as f:
+        with open(dir,'r') as f:
             character_data = json.load(f)
-        return character_data
+            return character_data
     except FileNotFoundError:
         print("Error: The file 'data.json' was not found.")
     except json.JSONDecodeError:
         print("Error: Failed to decode JSON from the file (invalid JSON format).")
     
+
+#* Loop files in directory, use load_json(dir) to display it
+def display_character():
+    for file_dir in os.listdir("./characters"):
+        character_data = load_json("./characters/" + file_dir)
+
+        if "strength" in character_data:
+            primary_stat = "strength"
+        if "intelligence" in character_data:
+            primary_stat = "intelligence"
+        if "finesse" in character_data:
+            primary_stat = "finesse"
+        
+        print("==============================")
+        print(f"name: {character_data["name"]}\nclass: {character_data["job_class"]}\nhealth: {character_data["health"]}\nmana: {character_data["mana"]}\naction speed: {character_data["action_speed"]}\nstrength: {primary_stat}")
+        print("==============================")
