@@ -1,5 +1,6 @@
 from helper_functions import *
 from char_creation import *
+from battle import *
 import sys
 
 def display_menu():
@@ -21,7 +22,7 @@ def display_menu():
         case 1:
             display_character()
         case 2:
-            ...
+            choose_character_to_battle()
         case 3:
             choose_class()
         case 4:

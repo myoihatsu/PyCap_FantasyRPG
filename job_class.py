@@ -23,7 +23,7 @@ class Grunt(Character):
 
     #* added simple get_damage
     def get_damage(self):
-        return self.__strength + 2 * self._health
+        return self.__strength + 0.15 * self._health
     
     #* convert to dict to be saved in json
     def to_dict(self):
@@ -33,7 +33,8 @@ class Grunt(Character):
             "health" : self._health,
             "mana" : self._mana,
             "action_speed" : self._action_speed,
-            "strength" : self.__strength
+            "strength" : self.__strength,
+            "damage" : self.get_damage()
         }
 
 
@@ -48,7 +49,7 @@ class Wizard(Character):
 
     #* int + mp damage
     def get_damage(self):
-        return self.__intelligence + 2 * self._mana
+        return self.__intelligence + 0.7 * self._mana
     
     def to_dict(self):
         return {
@@ -57,7 +58,8 @@ class Wizard(Character):
             "health" : self._health,
             "mana" : self._mana,
             "action_speed" : self._action_speed,
-            "intelligence" : self.__intelligence
+            "intelligence" : self.__intelligence,
+            "damage" : self.get_damage()
         }
 
 
@@ -69,7 +71,7 @@ class Ranger(Character):
         self.__finesse = finesse
     
     def get_damage(self):
-        return self.__finesse + 2 * self._action_speed
+        return self.__finesse + 0.8 * self._action_speed
     
     def to_dict(self):
         return {
@@ -78,5 +80,6 @@ class Ranger(Character):
             "health" : self._health,
             "mana" : self._mana,
             "action_speed" : self._action_speed,
-            "finesse" : self.__finesse
+            "finesse" : self.__finesse,
+            "damage" : self.get_damage()
         }

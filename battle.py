@@ -43,6 +43,8 @@ def battle(char_one,char_two):
 
         attack(attacker,target)
 
+        print("\n")
+        
         if target["health"] <= 0:
             print("\n\n")
             print("======== WINNER ========")
@@ -83,6 +85,3 @@ def choose_character_to_battle():
             break
     
     battle(character_one,character_two)
-
-
-choose_character_to_battle()
