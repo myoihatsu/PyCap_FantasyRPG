@@ -1,19 +1,13 @@
-# from char_creation import * #* not in use for now
 from job_class import *
+from helper_functions import *
 import random
-
-#! for now just use some job_class directly to create char for test
-
-king = Grunt("Aragorn",90,10,0.9,10)
-villain = Wizard("Saruman",900,60,0.5,15)
-
 
 #! simple logic first, will update to rng
 def first_move(char_one,char_two):
     #* update later, higher action speed, more chance to move first
-    if char_one._action_speed > char_two._action_speed:
+    if char_one["action_speed"] > char_two["action_speed"]:
         return char_one, char_two
-    elif char_one._action_speed < char_two._action_speed:
+    elif char_one["action_speed"] < char_two["action_speed"]:
         return char_two, char_one
     else: #* randommmmm
         if random.randint(1,2) == 1:
@@ -23,11 +17,11 @@ def first_move(char_one,char_two):
 
 #* attack
 def attack(attacker,target,mode=0):
-    attacker_name = attacker._name
+    attacker_name = attacker["name"]
    
-    damage = attacker.get_damage()
+    damage = attacker["damage"]
 
-    target_name = target._name
+    target_name = target["name"]
     
 
     #*0 for attack, 1 for counter attack
@@ -35,36 +29,60 @@ def attack(attacker,target,mode=0):
         print(f"{attacker_name} dealt {damage} damage to {target_name}")
     if mode == 1:
         print(f"{attacker_name} counter attacked. dealt {damage} to {target_name}")
-    target._health -= damage
-    print(f"{attacker_name} HP: {attacker._health}")
-    print(f"{target_name} HP: {target._health}")
+    target["health"] -= damage
+    print(f"{attacker_name} HP: {attacker["health"]}")
+    print(f"{target_name} HP: {target["health"]}")
 
 
 
 def battle(char_one,char_two):
-   round = 1
-   while True:
-       print(f"=== Round {round} ===")
-       attacker, target = first_move(char_one,char_two)
+    round = 1
+    while True:
+        print(f"\n=== Round {round} ===")
+        attacker, target = first_move(char_one,char_two)
 
-       attack(attacker,target)
+        attack(attacker,target)
 
-       round += 1
-
-       if target._health <= 0:
-        print("\n\n")
-        print("======== WINNER ========")
-        print(f"{attacker._name}")
-        break
+        if target["health"] <= 0:
+            print("\n\n")
+            print("======== WINNER ========")
+            print(f"{attacker["name"]}")
+            break
        
-       attack(target,attacker,1)
+        attack(target,attacker,1)
 
-       if attacker._health <= 0:
-        print("\n\n")
-        print("======== WINNER ========")
-        print(f"{target._name}")
-        break
+        if attacker["health"] <= 0:
+            print("\n\n")
+            print("======== WINNER ========")
+            print(f"{target["name"]}")
+            break
+        
+        print(f"=== End of Round {round} ===\n")
+        round += 1
+       
+
+#* display available character , display_existing_char(), return list of dir
+#* select_option -1 = index for selecting dir in available_character
+#* load_json , load the dict containing stats of characters       
+def choose_character_to_battle():
+    print("==========================================")
+    print("Select first character to battle: ")
+    available_character = display_existing_char()
+    selected_one = select_option(len(available_character))
+    selected_one -= 1
+    character_one = load_json(available_character[selected_one])
+
+    print("Select second character to battle: ")
+    while True:
+        selected_two = select_option(len(available_character))
+        selected_two -= 1
+        if selected_two == selected_one:
+            print("Err: Second character cannot be the same as character one.")
+        else:
+            character_two = load_json(available_character[selected_two])
+            break
+    
+    battle(character_one,character_two)
 
 
-battle(king,villain)
-
+choose_character_to_battle()
