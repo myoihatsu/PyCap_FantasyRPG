@@ -95,7 +95,7 @@ class user_input:
 #* functions to get common values of a character-based object for initialization
 #* primary stats (STR,INT,FIN aka unique_stat) are passed using diff_stat
 #* why? just for testing if it works that's all, but I'm keeping this
-def get_commons(unique_stat):
+def get_commons_stat(unique_stat):
     name = user_input.get_text("Insert Character Name: ")
     health = user_input.get_num("Insert character's initial health: ")
     mana = user_input.get_num("Insert character's initial mana: ")
@@ -133,13 +133,13 @@ def display_character():
         print("==========================================")
 
 
+#* List existing character to be edit, choose which stat to edit, edit
 def edit_character():
     available_files = display_existing_char()
     print("Select which character to edit:")
     selection = select_option(len(available_files))
     character_data = load_json(available_files[selection-1])
     
-
     #! lots of copy pasting from existing code, watchout for errors
     if "strength" in character_data:
         primary_stat = "strength"
@@ -164,60 +164,38 @@ def edit_character():
             if before == new:
                 return
             character_data["health"] = new
-            try:
-                with open(available_files[selection-1],'w') as temp:
-                    json.dump(character_data,temp,indent=4) 
-            except OSError as e:
-                print(f"File Error: Could not write to disk. {e}")
-            except TypeError as e:
-                print(f"Data Error: Dictionary contains items that can't be JSON. {e}")
-            except Exception as e:
-                print(f"Unexpected Error: {e}")
-
-        #! will refactor later, very lazy atm and sleepy af
+            rewrite_stats(available_files[selection-1],character_data)
         case 2:
             before = character_data["mana"]
             new = user_input.get_num("Insert new mana amount: ")
             if before == new:
                 return
             character_data["mana"] = new
-            try:
-                with open(available_files[selection-1],'w') as temp:
-                    json.dump(character_data,temp,indent=4) 
-            except OSError as e:
-                print(f"File Error: Could not write to disk. {e}")
-            except TypeError as e:
-                print(f"Data Error: Dictionary contains items that can't be JSON. {e}")
-            except Exception as e:
-                print(f"Unexpected Error: {e}")
+            rewrite_stats(available_files[selection-1],character_data)
         case 3:
             before = character_data["action_speed"]
             new = user_input.get_num("Insert new action speed amount: ")
             if before == new:
                 return
             character_data["action_speed"] = new
-            try:
-                with open(available_files[selection-1],'w') as temp:
-                    json.dump(character_data,temp,indent=4) 
-            except OSError as e:
-                print(f"File Error: Could not write to disk. {e}")
-            except TypeError as e:
-                print(f"Data Error: Dictionary contains items that can't be JSON. {e}")
-            except Exception as e:
-                print(f"Unexpected Error: {e}")
+            rewrite_stats(available_files[selection-1],character_data)
         case 4:
             before = character_data[primary_stat]
             new = user_input.get_num(f"Insert new {primary_stat} amount: ")
             if before == new:
                 return
             character_data[primary_stat] = new
-            try:
-                with open(available_files[selection-1],'w') as temp:
-                    json.dump(character_data,temp,indent=4) 
-            except OSError as e:
-                print(f"File Error: Could not write to disk. {e}")
-            except TypeError as e:
-                print(f"Data Error: Dictionary contains items that can't be JSON. {e}")
-            except Exception as e:
-                print(f"Unexpected Error: {e}")
+            rewrite_stats(available_files[selection-1],character_data)
 
+
+#* try open the file specified, and try to rewrite
+def rewrite_stats(file_to_rewrite,stat):
+    try:
+        with open(file_to_rewrite,'w') as temp:
+            json.dump(stat,temp,indent=4) 
+    except OSError as e:
+        print(f"File Error: Could not write to disk. {e}")
+    except TypeError as e:
+        print(f"Data Error: Dictionary contains items that can't be JSON. {e}")
+    except Exception as e:
+        print(f"Unexpected Error: {e}")
