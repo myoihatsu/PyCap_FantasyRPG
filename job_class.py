@@ -23,10 +23,10 @@ class Grunt(Character):
         return {
             "name" : self._name,
             "job_class" : "Grunt",
-            "health" : self._health,
-            "mana" : self._mana,
-            "action_speed" : self._action_speed,
-            "strength" : self.__strength
+            "health" : round(self._health, 2),
+            "mana" : round(self._mana, 2),
+            "action_speed" : round(self._action_speed, 2),
+            "strength" : round(self.__strength, 2)
         }
 
 
@@ -43,10 +43,10 @@ class Wizard(Character):
         return {
             "name" : self._name,
             "job_class" : "Wizard",
-            "health" : self._health,
-            "mana" : self._mana,
-            "action_speed" : self._action_speed,
-            "intelligence" : self.__intelligence
+            "health" : round(self._health, 2),
+            "mana" : round(self._mana, 2),
+            "action_speed" : round(self._action_speed, 2),
+            "intelligence" : round(self.__intelligence, 2)
         }
 
 
@@ -61,8 +61,8 @@ class Ranger(Character):
         return {
             "name" : self._name,
             "job_class" : "Ranger",
-            "health" : self._health,
-            "mana" : self._mana,
-            "action_speed" : self._action_speed,
-            "finesse" : self.__finesse
+            "health" : round(self._health, 2),
+            "mana" : round(self._mana, 2),
+            "action_speed" : round(self._action_speed, 2),
+            "finesse" : round(self.__finesse, 2)
         }

@@ -21,11 +21,11 @@ def first_move(char_one,char_two):
 #* damage updates every turn for Grunt and Wizard, Ranger stays the same since action speed is static
 def get_damage(character):
     if character["job_class"] == "Grunt":
-        return character["strength"] + 0.15 * character["health"]
+        return round(character["strength"] + 0.15 * character["health"], 2)
     if character["job_class"] == "Wizard":
-        return character["intelligence"] + 0.7 * character["mana"]
+        return round(character["intelligence"] + 0.7 * character["mana"], 2)
     if character["job_class"] == "Ranger":
-        return character["finesse"] + 0.8 * character["action_speed"]
+        return round(character["finesse"] + 0.8 * character["action_speed"], 2)
 
 
 #* attack
@@ -43,22 +43,24 @@ def attack(attacker,target,mode=0):
             attacker["mana"] -= 4
             target["health"] -= damage
         else:
-            print(f"{attacker_name} out of mana. {attacker_name} struggled and dealt {damage * 0.7} damage at the cost of 4 HP")
+            struggle_damage = round(damage * 0.7, 2)
+            print(f"{attacker_name} out of mana. {attacker_name} struggled and dealt {struggle_damage} damage at the cost of 4 HP")
             attacker["health"] -= 4
-            target["health"] -= damage * 0.7
+            target["health"] -= struggle_damage
     if mode == 1:
         if attacker["mana"] >= 4:
             print(f"{attacker_name} counter attacked dealt {damage} damage to {target_name}")
             attacker["mana"] -= 4
             target["health"] -= damage
         else:
-            print(f"{attacker_name} counter attacked, but out of mana. {attacker_name} struggled and dealt {damage*0.7} damage at the cost of 4 HP")
+            struggle_damage = round(damage * 0.7, 2)
+            print(f"{attacker_name} counter attacked, but out of mana. {attacker_name} struggled and dealt {struggle_damage} damage at the cost of 4 HP")
             attacker["health"] -= 4
-            target["health"] -= damage * 0.7
+            target["health"] -= struggle_damage
             
     
-    print(f"{attacker_name} HP: {attacker["health"]} MP: {attacker["mana"]}")
-    print(f"{target_name} HP: {target["health"]} MP: {target["mana"]}")
+    print(f"{attacker_name} HP: {round(attacker['health'], 2)} MP: {round(attacker['mana'], 2)}")
+    print(f"{target_name} HP: {round(target['health'], 2)} MP: {round(target['mana'], 2)}")
 
     print("")
     input("Press Enter to continue")
