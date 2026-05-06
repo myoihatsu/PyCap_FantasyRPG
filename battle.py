@@ -1,7 +1,7 @@
 from job_class import *
 from helper_functions import *
 import random
-
+import time
 
 def first_move(char_one,char_two):
     roll_one = random.randint(1,max(1,char_one["action_speed"]))
@@ -59,6 +59,9 @@ def attack(attacker,target,mode=0):
     
     print(f"{attacker_name} HP: {attacker["health"]} MP: {attacker["mana"]}")
     print(f"{target_name} HP: {target["health"]} MP: {target["mana"]}")
+
+    print("")
+    input("Press Enter to continue")
 
     #check if HP = or less than 0
     if target["health"] <= 0:
