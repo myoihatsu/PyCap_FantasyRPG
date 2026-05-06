@@ -8,9 +8,6 @@ class Character:
     def __str__(self):
         pass
 
-    def get_damage(self):
-        pass
-
     def to_dict(self):
         pass
 
@@ -29,8 +26,7 @@ class Grunt(Character):
             "health" : self._health,
             "mana" : self._mana,
             "action_speed" : self._action_speed,
-            "strength" : self.__strength,
-            "damage" : self.get_damage()
+            "strength" : self.__strength
         }
 
 
@@ -50,8 +46,7 @@ class Wizard(Character):
             "health" : self._health,
             "mana" : self._mana,
             "action_speed" : self._action_speed,
-            "intelligence" : self.__intelligence,
-            "damage" : self.get_damage()
+            "intelligence" : self.__intelligence
         }
 
 
@@ -69,6 +64,5 @@ class Ranger(Character):
             "health" : self._health,
             "mana" : self._mana,
             "action_speed" : self._action_speed,
-            "finesse" : self.__finesse,
-            "damage" : self.get_damage()
+            "finesse" : self.__finesse
         }

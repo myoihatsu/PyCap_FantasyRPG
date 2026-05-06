@@ -31,21 +31,42 @@ def get_damage(character):
 #* attack
 def attack(attacker,target,mode=0):
     attacker_name = attacker["name"]
-   
+
     damage = get_damage(attacker)
 
     target_name = target["name"]
-    
 
     #*0 for attack, 1 for counter attack
     if mode == 0:
-        print(f"{attacker_name} dealt {damage} damage to {target_name}")
+        if attacker["mana"] >= 4:
+            print(f"{attacker_name} dealt {damage} damage to {target_name}")
+            attacker["mana"] -= 4
+            target["health"] -= damage
+        else:
+            print(f"{attacker_name} out of mana. {attacker_name} struggled and dealt {damage * 0.7} damage at the cost of 4 HP")
+            attacker["health"] -= 4
+            target["health"] -= damage * 0.7
     if mode == 1:
-        print(f"{attacker_name} counter attacked. dealt {damage} to {target_name}")
-    target["health"] -= damage
-    print(f"{attacker_name} HP: {attacker["health"]}")
-    print(f"{target_name} HP: {target["health"]}")
+        if attacker["mana"] >= 4:
+            print(f"{attacker_name} counter attacked dealt {damage} damage to {target_name}")
+            attacker["mana"] -= 4
+            target["health"] -= damage
+        else:
+            print(f"{attacker_name} counter attacked, but out of mana. {attacker_name} struggled and dealt {damage*0.7} damage at the cost of 4 HP")
+            attacker["health"] -= 4
+            target["health"] -= damage * 0.7
+            
+    
+    print(f"{attacker_name} HP: {attacker["health"]} MP: {attacker["mana"]}")
+    print(f"{target_name} HP: {target["health"]} MP: {target["mana"]}")
 
+    #check if HP = or less than 0
+    if target["health"] <= 0:
+        return True
+    if attacker["health"] <= 0:
+        return True
+    
+    return False
 
 def battle(char_one,char_two):
     round = 1
@@ -58,23 +79,24 @@ def battle(char_one,char_two):
         print(f"=== {attacker["name"]} rolls higher, they get to move first !")
 
         #start attacking
-        attack(attacker,target)
+        #check if it return True and attacking at the same time, this is deliberate :D
+        if attack(attacker,target):
+            print("\n\n======== WINNER ========")
+            if target["health"] <=0:
+                print(f"{attacker["name"]}\n\n")
+            else:
+                print(f"{target["name"]} won. {attacker["name"]} struggled to death\n\n")
+            break
 
         print("\n")
-        
-        if target["health"] <= 0:
-            print("\n\n")
-            print("======== WINNER ========")
-            print(f"{attacker["name"]}")
-            break
-       
-       #counter-attacking
-        attack(target,attacker,1)
 
-        if attacker["health"] <= 0:
-            print("\n\n")
-            print("======== WINNER ========")
-            print(f"{target["name"]}")
+        #counter-attacking
+        if attack(target,attacker,1):
+            print("\n\n======== WINNER ========")
+            if target["health"] <=0:
+                print(f"{attacker["name"]}\n\n")
+            else:
+                print(f"{target["name"]} won. {attacker["name"]} struggled to death\n\n")
             break
         
         print(f"=== End of Round {round} ===\n")
