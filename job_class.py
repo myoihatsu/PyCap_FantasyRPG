@@ -20,10 +20,6 @@ class Grunt(Character):
         super().__init__(name, health, mana, action_speed)
 
         self.__strength = strength
-
-    #* added simple get_damage
-    def get_damage(self):
-        return self.__strength + 0.15 * self._health
     
     #* convert to dict to be saved in json
     def to_dict(self):
@@ -47,10 +43,6 @@ class Wizard(Character):
         #? maybe in the future wizard HP is 0.8 effective
         #? because I planned to include portion of MP as bonus damage
 
-    #* int + mp damage
-    def get_damage(self):
-        return self.__intelligence + 0.7 * self._mana
-    
     def to_dict(self):
         return {
             "name" : self._name,
@@ -69,9 +61,6 @@ class Ranger(Character):
 
         #* decided finesse sounds nicer instead of dexterity
         self.__finesse = finesse
-    
-    def get_damage(self):
-        return self.__finesse + 0.8 * self._action_speed
     
     def to_dict(self):
         return {

@@ -15,11 +15,22 @@ def first_move(char_one,char_two):
         else:
             return char_two, char_one 
 
+
+#* damage updates every turn for Grunt and Wizard, Ranger stays the same since action speed is static
+def get_damage(character):
+    if character["job_class"] == "Grunt":
+        return character["strength"] + 0.15 * character["health"]
+    if character["job_class"] == "Wizard":
+        return character["intelligence"] + 0.7 * character["mana"]
+    if character["job_class"] == "Ranger":
+        return character["finesse"] + 0.8 * character["action_speed"]
+
+
 #* attack
 def attack(attacker,target,mode=0):
     attacker_name = attacker["name"]
    
-    damage = attacker["damage"]
+    damage = get_damage(attacker)
 
     target_name = target["name"]
     
@@ -32,7 +43,6 @@ def attack(attacker,target,mode=0):
     target["health"] -= damage
     print(f"{attacker_name} HP: {attacker["health"]}")
     print(f"{target_name} HP: {target["health"]}")
-
 
 
 def battle(char_one,char_two):
@@ -61,7 +71,7 @@ def battle(char_one,char_two):
         
         print(f"=== End of Round {round} ===\n")
         round += 1
-       
+
 
 #* display available character , display_existing_char(), return list of dir
 #* select_option -1 = index for selecting dir in available_character
