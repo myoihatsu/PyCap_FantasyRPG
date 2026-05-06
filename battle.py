@@ -2,19 +2,21 @@ from job_class import *
 from helper_functions import *
 import random
 
-#! simple logic first, will update to rng
-def first_move(char_one,char_two):
-    #* update later, higher action speed, more chance to move first
-    if char_one["action_speed"] > char_two["action_speed"]:
-        return char_one, char_two
-    elif char_one["action_speed"] < char_two["action_speed"]:
-        return char_two, char_one
-    else: #* randommmmm
-        if random.randint(1,2) == 1:
-            return char_one, char_two
-        else:
-            return char_two, char_one 
 
+def first_move(char_one,char_two):
+    roll_one = random.randint(1,max(1,char_one["action_speed"]))
+    roll_two = random.randint(1,max(1,char_two["action_speed"]))
+
+    if roll_one > roll_two:
+        return char_one, char_two
+    elif roll_two > roll_one:
+        return char_two, char_one
+    else:
+        winner = random.choice([1,2])
+        if winner == 1:
+            return char_one,char_two
+        else:
+            return char_two,char_one
 
 #* damage updates every turn for Grunt and Wizard, Ranger stays the same since action speed is static
 def get_damage(character):
@@ -49,8 +51,13 @@ def battle(char_one,char_two):
     round = 1
     while True:
         print(f"\n=== Round {round} ===")
+
+        #deciding first to move
         attacker, target = first_move(char_one,char_two)
 
+        print(f"=== {attacker["name"]} rolls higher, they get to move first !")
+
+        #start attacking
         attack(attacker,target)
 
         print("\n")
@@ -61,6 +68,7 @@ def battle(char_one,char_two):
             print(f"{attacker["name"]}")
             break
        
+       #counter-attacking
         attack(target,attacker,1)
 
         if attacker["health"] <= 0:
