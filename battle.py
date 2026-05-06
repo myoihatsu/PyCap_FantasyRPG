@@ -80,14 +80,19 @@ def choose_character_to_battle():
     print("==========================================")
     print("Select first character to battle: ")
     available_character = display_existing_char()
+
+    #character one selection
     selected_one = select_option(len(available_character))
     selected_one -= 1
     character_one = load_json(available_character[selected_one])
 
     print("Select second character to battle: ")
     while True:
+        #character two selection
         selected_two = select_option(len(available_character))
         selected_two -= 1
+
+        #check if selected character two is the same as one
         if selected_two == selected_one:
             print("Err: Second character cannot be the same as character one.")
         else:
