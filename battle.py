@@ -1,9 +1,23 @@
 from job_class import *
 from helper_functions import *
 import random
-import time
 
 def first_move(char_one,char_two):
+    """Determines the turn order based on action speed rolls.
+
+    Each character rolls a random integer between 1 and their action_speed. 
+    The higher roll moves first. In the event of a tie, a random choice 
+    is made to determine the starter.
+
+    Args:
+        char_one (dict): The first character dictionary.
+        char_two (dict): The second character dictionary.
+
+    Returns:
+        tuple[dict, dict]: A tuple containing (attacker, target) in the 
+            determined turn order.
+    """
+
     roll_one = random.randint(1,max(1,char_one["action_speed"]))
     roll_two = random.randint(1,max(1,char_two["action_speed"]))
 
@@ -19,17 +33,41 @@ def first_move(char_one,char_two):
             return char_two,char_one
 
 #* damage updates every turn for Grunt and Wizard, Ranger stays the same since action speed is static
-def get_damage(character):
+def get_damage(character) -> float: 
+    """Calculates combat damage based on class-specific stat scaling.
+
+    Args:
+        character (dict): A dictionary containing "job_class" and the secondary 
+            scaling stats like "strength", "health", "intelligence", "mana", 
+            "finesse", or "action_speed".
+
+    Returns:
+        float: The calculated damage rounded to 2 decimal places, or 0.0 if the 
+            class is unrecognized.
+    """
     if character["job_class"] == "Grunt":
         return round(character["strength"] + 0.15 * character["health"], 2)
     if character["job_class"] == "Wizard":
         return round(character["intelligence"] + 0.7 * character["mana"], 2)
     if character["job_class"] == "Ranger":
         return round(character["finesse"] + 0.8 * character["action_speed"], 2)
+    
+    return 0.0
 
 
 #* attack
-def attack(attacker,target,mode=0):
+def attack(attacker,target,mode=0) -> bool:
+    """Executes a combat turn including damage calculation and resource management.
+
+    Args:
+        attacker (dict): A dictionary containing 'name', 'health', 'mana', and stats for get_damage.
+        target (dict): A dictionary containing 'name', 'health', and 'mana' of the opponent.
+        mode (int, optional): The combat stance. 0 for normal attack, 1 for counter attack. Defaults to 0.
+
+    Returns:
+        bool: True if either the attacker or target has been defeated (HP <= 0), False otherwise.
+    """
+
     attacker_name = attacker["name"]
 
     damage = get_damage(attacker)
@@ -74,6 +112,17 @@ def attack(attacker,target,mode=0):
     return False
 
 def battle(char_one,char_two):
+    """Orchestrates a turn-based combat loop between two characters.
+
+    Each round consists of an initiative roll to determine the first attacker, 
+    an initial attack phase, and a subsequent counter-attack phase. The loop 
+    continues until one character's health drops to zero or below.
+
+    Args:
+        char_one (dict): The first combatant dictionary.
+        char_two (dict): The second combatant dictionary.
+    """
+
     round = 1
     while True:
         print(f"\n=== Round {round} ===")
@@ -112,6 +161,14 @@ def battle(char_one,char_two):
 #* select_option -1 = index for selecting dir in available_character
 #* load_json , load the dict containing stats of characters       
 def choose_character_to_battle():
+    """Handles the selection process for two unique characters and starts a battle.
+
+    Prompts the user to select two characters from the available list. Includes 
+    validation logic to ensure the same character cannot be selected twice 
+    against itself. Once two distinct characters are chosen, their data is 
+    loaded and the battle sequence is initiated.
+    """
+    
     print("==========================================")
     print("Select first character to battle: ")
     available_character = display_existing_char()
