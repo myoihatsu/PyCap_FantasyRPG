@@ -2,8 +2,11 @@ from helper_functions import *
 from char_creation import *
 from battle import *
 import sys
+import os
 
 def display_menu():
+    """Displays the main menu and handles user selection for game operations."""
+    check_dir()
     print("==========================================")
     print("Welcome to FantasyRPG battler")
     print("==========================================")
@@ -17,6 +20,15 @@ def display_menu():
     print("==========================================")
 
     selection = select_option(6)
+
+    #* Check if there are enough characters before proceeding
+    char_count = len(os.listdir("./characters"))
+    if selection in [1, 4, 5] and char_count < 1:
+        print("No character available, create more!")
+        return
+    elif selection == 2 and char_count < 2:
+        print("At least two characters are required to battle! Create more.")
+        return
 
     match selection:
         case 1:
