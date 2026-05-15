@@ -61,5 +61,3 @@ python main.py
 - `helper_functions.py`: File I/O (JSON), input validation, and character management utilities.
 - `characters/`: Directory where character data is stored.
 
-## 📝 License
-This project is open-source and available under the [MIT License](LICENSE).
