@@ -37,7 +37,7 @@ At the start of every round, both combatants roll for initiative. A random numbe
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/PyCap_FantasyRPG.git
+   git clone https://github.com/myoihatsu/PyCap_FantasyRPG.git
    cd PyCap_FantasyRPG
    ```
 2. Ensure the `characters/` directory exists:
